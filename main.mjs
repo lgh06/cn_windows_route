@@ -8,7 +8,7 @@ import child_process from "node:child_process";
 
 
 let gateway = "172.24.1.1"
-let metric = 499;
+let metric = 497;
 let interfaceIndex = 7;
 
 //  https://github.com/gaoyifan/china-operator-ip/blob/ip-lists/china.txt
@@ -36,24 +36,24 @@ async function processLineByLine() {
     console.log("当前行"+ num)
     // input.txt 中的每一行都将在此处作为 `line` 连续可用。
     // console.log(`Line from file: ${line}`);
-    const block = new netmask.Netmask(line);
+    let block = new netmask.Netmask(line);
     // console.log(block.base,block.first, block.mask)
     try {
 
       // let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} IF ${interfaceIndex}`)
-      // let r = execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`)
-      let r = execPromised(`route delete ${block.base} ${gateway} `)
+      let r = execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`)
+      // let r = execPromised(`route delete ${block.base} ${gateway} `)
 
       // str += `route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} &  `
       // str += `route delete ${block.base} ${gateway}  &  `
-
+      block = null
     } catch (error) {
       console.error(error)
     }
 
   }
-  str = str.substring(0, str.length - 3)
-  str += `\r\npause`
+  // str = str.substring(0, str.length - 3)
+  // str += `\r\npause`
   // fs.writeFileSync('route.bat', str)
 }
 
