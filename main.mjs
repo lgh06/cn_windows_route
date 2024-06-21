@@ -27,6 +27,7 @@ async function processLineByLine() {
   let execPromised = util.promisify(exec);
 
   try {
+    execPromised(`route add 1.1.1.1 MASK 255.255.255.255 ${gateway} METRIC 1`)
     execPromised(`route change 0.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
     execPromised(`route change 128.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
   } catch (error) {
