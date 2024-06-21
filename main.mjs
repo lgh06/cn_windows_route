@@ -26,8 +26,13 @@ async function processLineByLine() {
   let exec = child_process.exec;
   let execPromised = util.promisify(exec);
 
-  execPromised(`route change 0.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`)
-  execPromised(`route change 128.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`)
+  try {
+    execPromised(`route change 0.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
+    execPromised(`route change 128.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
+  } catch (error) {
+    console.error(error)
+  }
+
 
   let num = 0;
   let str = "@echo off \r\n";
@@ -41,8 +46,9 @@ async function processLineByLine() {
     try {
 
       // let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} IF ${interfaceIndex}`)
-      let r = execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`)
+      let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`)
       // let r = execPromised(`route delete ${block.base} ${gateway} `)
+      console.log(r.stdout, r.stderr)
 
       // str += `route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} &  `
       // str += `route delete ${block.base} ${gateway}  &  `
@@ -58,9 +64,11 @@ async function processLineByLine() {
 }
 
 processLineByLine().then(r =>{
-
-}).finally(r =>{
   process.exit(0);
+
+}).catch(e =>{
+  console.error(e)
+}).finally(r =>{
 });
 
 
