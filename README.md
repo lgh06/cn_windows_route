@@ -14,3 +14,6 @@ npm start
 需要定期手动更新`china.txt`  
 来源1： https://github.com/gaoyifan/china-operator-ip/blob/ip-lists/china.txt  
 来源2： https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt  
+
+经常访问国外的浏览器 DNS设置为 https://8.8.8.8/dns-query 或1.1.1.1  
+经常访问国内的浏览器 DNS设置为 https://doh.pub/dns-query  
