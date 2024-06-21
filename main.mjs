@@ -27,7 +27,7 @@ async function processLineByLine() {
   let execPromised = util.promisify(exec);
 
   try {
-    execPromised(`route add 1.1.1.1 MASK 255.255.255.255 ${gateway} METRIC 1`)
+    execPromised(`route add 1.1.1.1 MASK 255.255.255.255 ${gateway} METRIC 1`).catch(e => { console.log(e) })
     execPromised(`route change 0.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
     execPromised(`route change 128.0.0.0 mask 128.0.0.0 192.168.48.1 METRIC 599`).catch(e => { console.log(e) })
   } catch (error) {
@@ -46,10 +46,10 @@ async function processLineByLine() {
     // console.log(block.base,block.first, block.mask)
     try {
 
-      // let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} IF ${interfaceIndex}`)
-      let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`)
-      // let r = await execPromised(`route delete ${block.base} ${gateway} `)
-      console.log(r.stdout, r.stderr)
+      // let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} IF ${interfaceIndex}`).catch(e => { console.log(e) })
+      let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`).catch(e => { console.log(e) })
+      // let r = await execPromised(`route delete ${block.base} ${gateway} `).catch(e => { console.log(e) })
+      // console.log(r.stdout, r.stderr)
 
       // str += `route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} &  `
       // str += `route delete ${block.base} ${gateway}  &  `
