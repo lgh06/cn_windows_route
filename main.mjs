@@ -47,8 +47,8 @@ async function processLineByLine() {
     try {
 
       // let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} IF ${interfaceIndex}`).catch(e => { console.log(e) })
-      let r = await execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`).catch(e => { console.log(e) })
-      // let r = await execPromised(`route delete ${block.base} ${gateway} `).catch(e => { console.log(e) })
+      let r = execPromised(`route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric}`).catch(e => { console.log(e) })
+      // let r = execPromised(`route delete ${block.base} ${gateway} `).catch(e => { console.log(e) })
       // console.log(r.stdout, r.stderr)
 
       // str += `route add ${block.base} MASK ${block.mask} ${gateway} METRIC ${metric} &  `
